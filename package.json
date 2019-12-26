@@ -1,0 +1,20 @@
+{
+  "name": "poc-neo4j",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://gitlab-cloud.riachuelo.net/scripts_pocs/node-poc-neo4j.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "faker": "^4.1.0",
+    "neo4j-driver": "^4.0.1",
+    "properties-reader": "^0.3.1"
+  }
+}
