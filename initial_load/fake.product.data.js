@@ -1,8 +1,8 @@
 var faker = require('faker/locale/pt_BR');
-const qtd_produtos = 50000;
+const qty_nodes = 100000; // qty of nodes to be created with fake product's data
 var products = []
 console.log('Creating Product Fake Data');
-for (var i=1;i<=qtd_produtos;i++) {
+for (var i=1;i<=qty_nodes;i++) {
     products.push(
                 {sku: i,
                  product: faker.commerce.product(), 

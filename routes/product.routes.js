@@ -9,13 +9,13 @@ router.use(async function(req, res, next) {
   });
 
 router.get('/products', async function(req, res, next) {
-    console.log('Chamou o GET: ');
     try {
         res.send(await ProductController.getProducts());
+
+        // IF elses
     } catch (error) {
         console.log(error);
     }
-    next();
   });
 
 console.log('4. ###### ROUTES');

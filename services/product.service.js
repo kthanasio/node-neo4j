@@ -14,7 +14,7 @@ console.log('2. ###### SERVICE');
 
 exports.getProducts = async function () {
     try {
-        const query_data = `match (a:${node_label}) where a.color = $color and a.price > 100 and a.price < 250 return a.sku, a.name, a.dco, a.color`;
+        const query_data = `match (a:${node_label}) where a.color = $color return a.sku, a.name, a.dco, a.color`;
         const params = {color: 'white'};
         const driver = neo4j.driver(url, neo4j.auth.basic(user, password));
         const session = driver.session();

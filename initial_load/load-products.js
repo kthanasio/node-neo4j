@@ -1,4 +1,4 @@
-const productsData = require('./product.data.js');
+const productsData = require('./fake.product.data.js');
 
 const PropertiesReader = require('properties-reader');
 const prop = PropertiesReader('app.properties');
