@@ -14,5 +14,5 @@ for (var i=1;i<=qty_nodes;i++) {
                  material: faker.commerce.productMaterial()
                 });
 }
-console.log('Created Product Fake Data');
+//console.log('Created Product Fake Data' + JSON.stringify(products,4));
 exports.getProducts = products

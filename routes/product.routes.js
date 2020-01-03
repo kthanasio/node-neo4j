@@ -8,15 +8,11 @@ router.use(async function(req, res, next) {
     next();
   });
 
-router.get('/products', async function(req, res, next) {
-    try {
-        res.send(await ProductController.getProducts());
+router.get('/products', ProductController.getProducts);
 
-        // IF elses
-    } catch (error) {
-        console.log(error);
-    }
-  });
+router.get('/products/:id',ProductController.getProductsById);
+
+router.post('/products/categories/:idCategory',ProductController.setProductsCategory);
 
 console.log('4. ###### ROUTES');
 module.exports.router = router;
