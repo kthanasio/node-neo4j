@@ -1,12 +1,23 @@
-const ProductSchema = {
-    sku: String,
-    product: String, 
-    color: String,
-    dco: String,
-    name: String,
-    price: Number,
-    marca: String,
-    material: String
-}
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+// var atributoType = {
+//         chave: string;
+//         valor: string;
+// }
+var Product = /** @class */ (function () {
+    function Product(sku, product, color, dco, name, price, marca, material, atributos) {
+        this.sku = sku;
+        this.product = product;
+        this.color = color;
+        this.dco = dco;
+        this.name = name;
+        this.price = price;
+        this.marca = marca;
+        this.material = material;
+        this.atributos = atributos;
+    }
+    return Product;
+}());
+exports.Product = Product;
 console.log('1. ###### MODEL');
-module.exports = ProductSchema;
+//# sourceMappingURL=product.model.js.map

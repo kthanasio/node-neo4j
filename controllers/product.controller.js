@@ -1,12 +1,10 @@
-var ProductService = require('../services/product.service')
+const ProductService = require('../services/product.service')
 
-console.log('3. ###### CONTROLLER');
+console.log('3. ###### PRODUCT CONTROLLER');
 
 exports.getProducts = async function (req,res) {
     try {
-        var products =  await ProductService.getProducts();
-
-        // REQ vira Cypher
+        const products =  await ProductService.getProducts();
         res.send(products);
     } catch (e) {
         console.log(e);
@@ -15,9 +13,7 @@ exports.getProducts = async function (req,res) {
 
 exports.getProductsById = async function (req,res) {
     try {
-        var products =  await ProductService.getProductDetails(req.params.id);
-        
-        // REQ vira Cypher
+        const products =  await ProductService.getProductDetails(req.params.id);
         res.send(products);
     } catch (e) {
         console.log(e);
@@ -26,8 +22,8 @@ exports.getProductsById = async function (req,res) {
 
 exports.setProductsCategory = async function (req, res) {
     try {
-        var products = await ProductService.setProductsCategory(null,req.params.idCategory);
-
+        const query = req.body;
+        const products = await ProductService.setProductsCategory(query);
         res.send(products);
     } catch (error) {
         console.log(error);

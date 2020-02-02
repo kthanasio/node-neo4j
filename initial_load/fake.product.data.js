@@ -1,18 +1,20 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var faker = require('faker/locale/pt_BR');
-const qty_nodes = 100000; // qty of nodes to be created with fake product's data
-var products = []
+var product_model_1 = require("../model/product.model");
+// leitura de parametros do properties
+var PropertiesReader = require('properties-reader');
+var prop = PropertiesReader('app.properties');
+var getProperty = function (pty) { return prop.get(pty); };
+var qty_produtos = getProperty('qty_produtos');
+var Products = [];
+exports.Products = Products;
 console.log('Creating Product Fake Data');
-for (var i=1;i<=qty_nodes;i++) {
-    products.push(
-                {sku: i,
-                 product: faker.commerce.product(), 
-                 color: faker.commerce.color(),
-                 dco: faker.commerce.department(),
-                 name: faker.commerce.productName(),
-                 price: parseInt (faker.commerce.price(), 10),
-                 marca: faker.commerce.productAdjective(),
-                 material: faker.commerce.productMaterial()
-                });
+for (var i = 1; i <= qty_produtos; i++) {
+    var p = new product_model_1.Product(i, faker.commerce.product(), faker.commerce.color(), faker.commerce.department(), faker.commerce.productName(), parseInt(faker.commerce.price(), 10), faker.commerce.productAdjective(), faker.commerce.productMaterial(), [{ chave: 'cor', valor: faker.commerce.color() },
+        { chave: 'tamanho', valor: 'P' },
+        { chave: 'preco', valor: parseInt(faker.commerce.price(), 10) },
+        { chave: 'material', valor: faker.commerce.productMaterial() }]);
+    Products.push(p);
 }
-//console.log('Created Product Fake Data' + JSON.stringify(products,4));
-exports.getProducts = products
+//# sourceMappingURL=fake.product.data.js.map

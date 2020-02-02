@@ -1,5 +1,3 @@
-const Product = require('../model/product.model')
-
 const PropertiesReader = require('properties-reader');
 const prop = PropertiesReader('app.properties');
 const getProperty = (pty) => {return prop.get(pty);}
@@ -9,14 +7,12 @@ const parser = require('parse-neo4j');
 const url = getProperty('neo4j.url');
 const user = getProperty('neo4j.user');
 const password = getProperty('neo4j.password');
-const node_label = getProperty('neo4j.node_label');
 
-console.log('2. ###### PRODUCT SERVICE');
+console.log('2. ###### CATEGORY SERVICE');
 
-exports.getProducts = async function() {
+exports.getCategories = async function() {
     try {
-        
-        const query_data = `match (a:Product) return a`;
+        const query_data = `match (a:Category) return a`;
         const driver = neo4j.driver(url, neo4j.auth.basic(user, password));
         const session = driver.session();
 
@@ -34,11 +30,9 @@ exports.getProducts = async function() {
         throw Error('Error while Paginating Products: ' + error)
     }
 }
-
-exports.getProductDetails = async function(idProduct) {
+exports.getCategory = async function(id) {
     try {
-        
-        const query_data = `match (a:Product) where a.sku = ${idProduct} return a`;
+        const query_data = `match (a:Category {id: ${id}}) return a`;
         const driver = neo4j.driver(url, neo4j.auth.basic(user, password));
         const session = driver.session();
 
@@ -56,14 +50,11 @@ exports.getProductDetails = async function(idProduct) {
         throw Error('Error while Paginating Products: ' + error)
     }
 }
-
-exports.setProductsCategory = async function(query) {
+exports.getCategoryProducts = async function(id) {
     try {
-        
-        const query_data = query;
+        const query_data = `MATCH (prd:Product)-[r:pertence]->(c:Category {id: ${id}}) with collect(prd.sku) as sku, c.id as id_category, c.name as name_category RETURN id_category,name_category,sku`;
         const driver = neo4j.driver(url, neo4j.auth.basic(user, password));
         const session = driver.session();
-
         const resultado = session.run(query_data).catch(function(error) {
             console.log(error);
         });
