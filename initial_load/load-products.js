@@ -1,5 +1,5 @@
 "use strict";
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 var fake_product_data_1 = require("./fake.product.data");
 var PropertiesReader = require('properties-reader');
 var prop = PropertiesReader('app.properties');
@@ -20,10 +20,11 @@ try {
         session.close();
         driver.close();
         console.log('Base criada no neo4j');
-    })["catch"](function (err) { return console.log(err); });
+    }).catch(function (err) { return console.log(err); });
 }
 catch (error) {
     console.log(error);
     session.close();
     driver.close();
 }
+//# sourceMappingURL=load-products.js.map

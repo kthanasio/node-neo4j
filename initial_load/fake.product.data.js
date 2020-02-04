@@ -1,5 +1,5 @@
 "use strict";
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 var faker = require('faker/locale/pt_BR');
 var product_model_1 = require("../model/product.model");
 // leitura de parametros do properties
@@ -23,3 +23,4 @@ for (var i = 1; i <= qty_produtos; i++) {
         { chave: 'material', valor: faker.commerce.productMaterial() }]);
     Products.push(p);
 }
+//# sourceMappingURL=fake.product.data.js.map
