@@ -13,17 +13,16 @@ const node_label = getProperty('neo4j.node_label');
 const driver = neo4j.driver(url, neo4j.auth.basic(user, password));
 const session = driver.session();
 
-const insert_data =  `UNWIND $props AS row MERGE (n:${node_label} {sku: row.sku})
-                      ON CREATE SET n.product = row.product
-                      ON MATCH SET n.product = row.product
+const insert_data =  `UNWIND $products AS row MERGE (n:Product {sku: row.sku})
+                      ON CREATE SET n.product = row.product, n.color = row.color
+                      ON MATCH SET n.product = row.product, n.color = row.color
                       WITH n,row.atributos as atributos
                       UNWIND atributos as atributo
-                      WITH n,atributo
-                      CALL apoc.merge.node([atributo.chave],{chave: atributo.chave, valor: atributo.valor}) YIELD node
-                      MERGE (n)-[r:possui_atributo]->(node)`;
-
-//console.log(Products);
-const params = {props: Products};
+                      WITH n,atributo, "POSSUI_ATRIBUTO_" + toUpper(atributo.chave) as relacao
+                      CALL apoc.merge.node([atributo.chave],{valor: atributo.valor}) YIELD node
+                      CALL apoc.create.relationship(n,relacao,{}, node) YIELD rel
+                      RETURN n,node`;
+const params = {products: Products};
 
 try {
   console.log('Criando base no neo4j');

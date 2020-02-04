@@ -34,5 +34,5 @@ class Product {
 
         }
 }
-console.log('1. ###### MODEL');
+console.log('1. ###### PRODUCT MODEL');
 export { Product };

@@ -1,5 +1,5 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
+exports.__esModule = true;
 // var atributoType = {
 //         chave: string;
 //         valor: string;
@@ -19,5 +19,4 @@ var Product = /** @class */ (function () {
     return Product;
 }());
 exports.Product = Product;
-console.log('1. ###### MODEL');
-//# sourceMappingURL=product.model.js.map
+console.log('1. ###### PRODUCT MODEL');
