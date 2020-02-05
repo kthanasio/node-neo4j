@@ -10,7 +10,7 @@ router.use(async function(req, res, next) {
 
 router.get('/', ProductController.getProducts);
 router.get('/:id',ProductController.getProductsById);
-router.post('/categories',ProductController.setProductsCategory);
+router.post('/categories/:id',ProductController.setProductsCategory);
 
 console.log('4. ###### PRODUCT ROUTES');
 module.exports.router = router;

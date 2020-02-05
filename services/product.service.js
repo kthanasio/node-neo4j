@@ -1,4 +1,5 @@
 const Product = require('../model/product.model')
+const ConvertQueryToCypher = require ('./utils/convert_query_to_cypher');
 
 const PropertiesReader = require('properties-reader');
 const prop = PropertiesReader('app.properties');
@@ -57,14 +58,41 @@ exports.getProductDetails = async function(idProduct) {
     }
 }
 
-exports.setProductsCategory = async function(query) {
+exports.setProductsCategory = async function(query,idCategory) {
     try {
+        /* exemplo de request esperado
+         * MATCH (p:Product)- ->(a:cor) where a.valor = 'red' with p {"cor": {"$eq": "red"}
+         * 
+         * 
+         * eq -> { label: { "$eq": "value" } } -> {"cor": {"$eq": "red"}
+         * gt -> { label: { "$gt": "value" } } -> {"preco": {"$gt": 100}
+         * gte -> { label: { "$gte": "value" } } -> {"preco": {"$gte": 100}
+         * in -> { label: { "$in": ["red", "blue", "black" ] } } -> { "cor": { "$in": ["red", "blue", "black" ] } }
+         * lt -> { label: { "$lt": "value" } } -> {"preco": {"$lt": 100}
+         * lte -> { label: { "$lte": "value" } } -> {"preco": {"$lte": 100}
+         * ne -> { label: { "$ne": "value" } } -> {"cor": {"$ne": "black"}
+         * nin -> { label: { "$nin": ["white" ] } } -> { "cor": { "$nin": ["white" ] } }
+         * 
+         */
+        const queryConvertida = ConvertQueryToCypher(query);
+        console.log(queryConvertida);
+        const productFilter  = query;
+        const categoryFilter = `match (c:Category {id: ${idCategory}}) return p,c`;
+        const apocStart      = productFilter + ' ' + categoryFilter;
         
-        const query_data = query;
+        console.log(apocStart);
+
+        const mergeStat      = `merge (p)-[:PERTENCE_CATEGORIA]->(c)`;
+        const processamento  = `{batchSize:1000, parallel:false}`;
+
+        const exec_data      = `call apoc.periodic.iterate("${apocStart}", 
+                                                           "${mergeStat}",
+                                                           ${processamento});`;
+        console.log(exec_data);
         const driver = neo4j.driver(url, neo4j.auth.basic(user, password));
         const session = driver.session();
 
-        const resultado = session.run(query_data).catch(function(error) {
+        const resultado =  session.run(exec_data).catch(function(error) {
             console.log(error);
         });
         
@@ -74,6 +102,7 @@ exports.setProductsCategory = async function(query) {
                 console.log(parseError);
             });    
         return parsedResult;
+        
     } catch (error) {
         throw Error('Error while Paginating Products: ' + error)
     }

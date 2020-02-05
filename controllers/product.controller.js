@@ -23,7 +23,8 @@ exports.getProductsById = async function (req,res) {
 exports.setProductsCategory = async function (req, res) {
     try {
         const query = req.body;
-        const products = await ProductService.setProductsCategory(query);
+        const idCategory = req.params.id;
+        const products = await ProductService.setProductsCategory(query,idCategory);
         res.send(products);
     } catch (error) {
         console.log(error);
