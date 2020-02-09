@@ -83,7 +83,7 @@ exports.setProductsCategory = async function(query,idCategory) {
         console.log(apocStart);
 
         const mergeStat      = `merge (p)-[:PERTENCE_CATEGORIA]->(c)`;
-        const processamento  = `{batchSize:1000, parallel:false}`;
+        const processamento  = `{batchSize:10000, parallel:false}`;
 
         const exec_data      = `call apoc.periodic.iterate("${apocStart}", 
                                                            "${mergeStat}",

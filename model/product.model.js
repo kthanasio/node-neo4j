@@ -20,4 +20,7 @@ var Product = /** @class */ (function () {
 }());
 exports.Product = Product;
 console.log('1. ###### PRODUCT MODEL');
+function newFunction() {
+    "use strict";
+}
 //# sourceMappingURL=product.model.js.map

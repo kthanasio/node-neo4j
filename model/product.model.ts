@@ -1,4 +1,3 @@
-"use strict";
 // var atributoType = {
 //         chave: string;
 //         valor: string;
@@ -36,3 +35,7 @@ class Product {
 }
 console.log('1. ###### PRODUCT MODEL');
 export { Product };
+
+function newFunction() {
+        "use strict";
+}

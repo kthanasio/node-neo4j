@@ -52,7 +52,7 @@ exports.getCategory = async function(id) {
 }
 exports.getCategoryProducts = async function(id) {
     try {
-        const query_data = `MATCH (prd:Product)-[r:pertence]->(c:Category {id: ${id}}) with collect(prd.sku) as sku, c.id as id_category, c.name as name_category RETURN id_category,name_category,sku`;
+        const query_data = `MATCH (prd:Product)-[r:PERTENCE_CATEGORIA]->(c:Category {id: ${id}}) with count(prd.sku) as total, collect(prd.sku) as sku, c.id as id_category, c.name as name_category RETURN id_category,name_category,total,sku`;
         const driver = neo4j.driver(url, neo4j.auth.basic(user, password));
         const session = driver.session();
         const resultado = session.run(query_data).catch(function(error) {
