@@ -44,7 +44,7 @@ var GetProperty_1 = require("../../services/utils/GetProperty");
 var Now_1 = require("../../services/utils/Now");
 function LoadProducts() {
     return __awaiter(this, void 0, void 0, function () {
-        var params, batchSize, products, totalProdutos, i;
+        var params, batchSize, products, totalProdutos, i, cont;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -57,11 +57,13 @@ function LoadProducts() {
                     products = _a.sent();
                     totalProdutos = _.keys(products.products).length;
                     i = 0;
+                    cont = 0;
                     i = 0;
                     _a.label = 3;
                 case 3:
                     if (!(i < totalProdutos)) return [3 /*break*/, 6];
-                    console.log(Now_1.Now() + " -  Step " + i + " / " + totalProdutos / batchSize);
+                    cont += 1;
+                    console.log(Now_1.Now() + " -  Step " + cont + " / " + totalProdutos / batchSize);
                     params.products = products.products.slice(i, i + Math.min(totalProdutos, batchSize));
                     // console.log(JSON.stringify(params));
                     return [4 /*yield*/, RunLoad_1.RunLoad(params)

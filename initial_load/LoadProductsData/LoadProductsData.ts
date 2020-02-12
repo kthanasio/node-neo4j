@@ -12,8 +12,10 @@ async function LoadProducts() {
     const products = await FakeProductData().then(produtos=>{return produtos;});
     const totalProdutos = _.keys(products.products).length;
     let i = 0;
+    let cont = 0;
     for (i=0;i<totalProdutos; i+=batchSize) {
-        console.log(`${Now()} -  Step ${i} / ` + totalProdutos/batchSize);
+        cont += 1;
+        console.log(`${Now()} -  Step ${cont} / ` + totalProdutos/batchSize);
         params.products = products.products.slice(i,i+Math.min(totalProdutos,batchSize));
         // console.log(JSON.stringify(params));
         await RunLoad(params)
