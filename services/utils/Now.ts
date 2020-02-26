@@ -1,13 +1,13 @@
-function IntTwoChars(i) {
+function IntTwoChars(i: number) {
     return (`0${i}`).slice(-2);
 }
 
 function Now() {
-    let date_ob = new Date();
-    let hours = IntTwoChars(date_ob.getHours());
-    let minutes = IntTwoChars(date_ob.getMinutes());
-    let seconds = IntTwoChars(date_ob.getSeconds());
-    let dateDisplay = `${hours}:${minutes}:${seconds}`;
+    const dateOb = new Date();
+    const hours = IntTwoChars(dateOb.getHours());
+    const minutes = IntTwoChars(dateOb.getMinutes());
+    const seconds = IntTwoChars(dateOb.getSeconds());
+    const dateDisplay = `${hours}:${minutes}:${seconds}`;
     return dateDisplay;
 }
 

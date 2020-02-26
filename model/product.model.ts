@@ -1,7 +1,4 @@
-// var atributoType = {
-//         chave: string;
-//         valor: string;
-// }
+// tslint:disable:no-console
 class Product {
         sku: string;
         product: string;
@@ -34,8 +31,4 @@ class Product {
         }
 }
 console.log('1. ###### PRODUCT MODEL');
-export { Product };
-
-function newFunction() {
-        "use strict";
-}
+export { Product }

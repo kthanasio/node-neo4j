@@ -1,9 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-// var atributoType = {
-//         chave: string;
-//         valor: string;
-// }
+// tslint:disable:no-console
 var Product = /** @class */ (function () {
     function Product(sku, product, color, dco, name, price, marca, material, atributos) {
         this.sku = sku;
@@ -20,7 +17,4 @@ var Product = /** @class */ (function () {
 }());
 exports.Product = Product;
 console.log('1. ###### PRODUCT MODEL');
-function newFunction() {
-    "use strict";
-}
 //# sourceMappingURL=product.model.js.map

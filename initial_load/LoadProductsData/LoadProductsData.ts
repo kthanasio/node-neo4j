@@ -1,6 +1,5 @@
 // tslint:disable: no-console
 import { FakeProductData }  from '../FakeProductData/fake.product.data';
-import PromisePool = require('@supercharge/promise-pool');
 import _ = require('underscore');
 import { RunLoad } from './RunLoad';
 import { GetProperty } from '../../services/utils/GetProperty';
@@ -8,7 +7,7 @@ import { Now } from '../../services/utils/Now';
 
 async function LoadProducts() {
     const params = {products:[]};
-    const batchSize = await GetProperty('batch_size').then(a=>{return parseInt(a,10);});
+    const batchSize = await GetProperty('batch_size').then(a=>{return parseInt(a.toString(),10);});
     const products = await FakeProductData().then(produtos=>{return produtos;});
     const totalProdutos = _.keys(products.products).length;
     let i = 0;

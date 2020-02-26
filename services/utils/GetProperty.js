@@ -36,7 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var PropertiesReader = require('properties-reader');
+var PropertiesReader = require("properties-reader");
 var prop = PropertiesReader('app.properties');
 function GetProperty(p) {
     return __awaiter(this, void 0, void 0, function () {

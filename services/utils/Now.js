@@ -4,10 +4,10 @@ function IntTwoChars(i) {
     return ("0" + i).slice(-2);
 }
 function Now() {
-    var date_ob = new Date();
-    var hours = IntTwoChars(date_ob.getHours());
-    var minutes = IntTwoChars(date_ob.getMinutes());
-    var seconds = IntTwoChars(date_ob.getSeconds());
+    var dateOb = new Date();
+    var hours = IntTwoChars(dateOb.getHours());
+    var minutes = IntTwoChars(dateOb.getMinutes());
+    var seconds = IntTwoChars(dateOb.getSeconds());
     var dateDisplay = hours + ":" + minutes + ":" + seconds;
     return dateDisplay;
 }

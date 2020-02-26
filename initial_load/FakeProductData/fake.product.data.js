@@ -36,22 +36,23 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var faker = require('faker/locale/pt_BR');
+// tslint:disable:no-console
+var faker = require("faker/locale/pt_BR");
 var product_model_1 = require("../../model/product.model");
 var GetProperty_1 = require("../../services/utils/GetProperty");
 var Products = { products: [] };
 function FakeProductData() {
     return __awaiter(this, void 0, void 0, function () {
-        var qty_products, i, _color, _product, _departamento, _productName, _productAdjective, _tamanho, _preco, _material, produto;
+        var qtyProducts, i, _color, _product, _departamento, _productName, _productAdjective, _tamanho, _preco, _material, produto;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, GetProperty_1.GetProperty('qty_products')
+                case 0: return [4 /*yield*/, GetProperty_1.GetProperty('qtyProducts')
                         .then(function (a) { return a; })];
                 case 1:
-                    qty_products = _a.sent();
-                    console.log("Quantidade de produtos: " + qty_products);
+                    qtyProducts = _a.sent();
+                    console.log("Quantidade de produtos: " + qtyProducts);
                     console.log('Creating Product Fake Data');
-                    for (i = 1; i <= qty_products; i++) {
+                    for (i = 1; i <= qtyProducts; i++) {
                         _color = faker.commerce.color();
                         _product = faker.commerce.product();
                         _departamento = faker.commerce.department();
@@ -75,5 +76,5 @@ function FakeProductData() {
     });
 }
 exports.FakeProductData = FakeProductData;
-//FakeProductData().then(a=>console.log(a));
+// FakeProductData().then(a=>console.log(a));
 //# sourceMappingURL=fake.product.data.js.map

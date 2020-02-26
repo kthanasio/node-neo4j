@@ -36,50 +36,40 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-// tslint:disable: no-console
-var fake_product_data_1 = require("../FakeProductData/fake.product.data");
-var _ = require("underscore");
-var RunLoad_1 = require("./RunLoad");
-var GetProperty_1 = require("../../services/utils/GetProperty");
-var Now_1 = require("../../services/utils/Now");
-function LoadProducts() {
+// tslint:disable:no-console
+var neo4j = require("neo4j-driver");
+var parser = require("parse-neo4j");
+var GetProperty_1 = require("./GetProperty");
+function ExecutarCypherQuery(query, p) {
     return __awaiter(this, void 0, void 0, function () {
-        var params, batchSize, products, totalProdutos, i, cont;
+        var url, user, password, driver, session, resultado;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0:
-                    params = { products: [] };
-                    return [4 /*yield*/, GetProperty_1.GetProperty('batch_size').then(function (a) { return parseInt(a.toString(), 10); })];
+                case 0: return [4 /*yield*/, GetProperty_1.GetProperty('neo4j.url').then(function (a) { return a.toString(); })];
                 case 1:
-                    batchSize = _a.sent();
-                    return [4 /*yield*/, fake_product_data_1.FakeProductData().then(function (produtos) { return produtos; })];
+                    url = _a.sent();
+                    return [4 /*yield*/, GetProperty_1.GetProperty('neo4j.user').then(function (a) { return a.toString(); })];
                 case 2:
-                    products = _a.sent();
-                    totalProdutos = _.keys(products.products).length;
-                    i = 0;
-                    cont = 0;
-                    i = 0;
-                    _a.label = 3;
+                    user = _a.sent();
+                    return [4 /*yield*/, GetProperty_1.GetProperty('neo4j.password').then(function (a) { return a.toString(); })];
                 case 3:
-                    if (!(i < totalProdutos)) return [3 /*break*/, 6];
-                    cont += 1;
-                    console.log(Now_1.Now() + " -  Step " + cont + " / " + totalProdutos / batchSize);
-                    params.products = products.products.slice(i, i + Math.min(totalProdutos, batchSize));
-                    // console.log(JSON.stringify(params));
-                    return [4 /*yield*/, RunLoad_1.RunLoad(params)
-                            .then(function (a) { return a; })
-                            .catch(function (err) { console.log(err); })];
-                case 4:
-                    // console.log(JSON.stringify(params));
-                    _a.sent();
-                    _a.label = 5;
-                case 5:
-                    i += batchSize;
-                    return [3 /*break*/, 3];
-                case 6: return [2 /*return*/];
+                    password = _a.sent();
+                    driver = neo4j.driver(url, neo4j.auth.basic(user, password));
+                    session = driver.session();
+                    resultado = session.run(query, p)
+                        .then(parser.parse)
+                        .catch(function (error) {
+                        console.log(error);
+                        return error;
+                    })
+                        .finally(function () {
+                        driver.close();
+                        session.close();
+                    });
+                    return [2 /*return*/, resultado];
             }
         });
     });
 }
-LoadProducts().then(function () { console.log('Completed'); });
-//# sourceMappingURL=LoadProductsData.js.map
+exports.ExecutarCypherQuery = ExecutarCypherQuery;
+//# sourceMappingURL=ExecutarCypherQuery.js.map

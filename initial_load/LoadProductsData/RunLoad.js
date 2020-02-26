@@ -36,42 +36,18 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-// tslint:disable: no-console
-var GetProperty_1 = require("../../services/utils/GetProperty");
-var neo4j = require("neo4j-driver");
-function RunLoad(params) {
+var ExecutarCypherQuery_1 = require("../../services/utils/ExecutarCypherQuery");
+function RunLoad(products) {
     return __awaiter(this, void 0, void 0, function () {
-        var url, user, password, insertData, driver, session, resultPromise, error_1;
+        var insertStat;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, GetProperty_1.GetProperty('neo4j.url').then(function (a) { return a; })];
+                case 0:
+                    insertStat = "UNWIND $products AS produto MERGE (n:Product {sku: produto.sku})\n                            ON CREATE SET n.data_criacao=date(), n.data_atualizacao=date()\n                            ON MATCH SET n.data_atualizacao=date()\n                        WITH n,produto.atributos as atributos\n                        UNWIND atributos as atributo\n                        WITH n,atributo,'POSSUI_ATRIBUTO_' + toUpper(trim(atributo.chave)) as relacao,\n                            apoc.text.upperCamelCase(trim(atributo.chave)) as label_atributo,atributo.valor as valor_atributo\n                        CALL apoc.merge.node([label_atributo],{valor: [valor_atributo]}) YIELD node\n                        CALL apoc.merge.relationship(n,relacao, {}, {}, node) YIELD rel\n                        RETURN n";
+                    return [4 /*yield*/, ExecutarCypherQuery_1.ExecutarCypherQuery(insertStat, products)];
                 case 1:
-                    url = _a.sent();
-                    return [4 /*yield*/, GetProperty_1.GetProperty('neo4j.user').then(function (a) { return a; })];
-                case 2:
-                    user = _a.sent();
-                    return [4 /*yield*/, GetProperty_1.GetProperty('neo4j.password').then(function (a) { return a; })];
-                case 3:
-                    password = _a.sent();
-                    insertData = "UNWIND $products AS produto MERGE (n:Product {sku: produto.sku})\n                            ON CREATE SET n.data_criacao=date(), n.data_atualizacao=date()\n                            ON MATCH SET n.data_atualizacao=date()\n                        WITH n,produto.atributos as atributos\n                        UNWIND atributos as atributo\n                        WITH n,atributo,'POSSUI_ATRIBUTO_' + toUpper(trim(atributo.chave)) as relacao,\n                            apoc.text.upperCamelCase(trim(atributo.chave)) as label_atributo,atributo.valor as valor_atributo\n                        CALL apoc.merge.node([label_atributo],{valor: [valor_atributo]}) YIELD node\n                        CALL apoc.merge.relationship(n,relacao, {}, {}, node) YIELD rel\n                        RETURN n";
-                    driver = neo4j.driver(url, neo4j.auth.basic(user, password));
-                    session = driver.session();
-                    _a.label = 4;
-                case 4:
-                    _a.trys.push([4, 6, , 7]);
-                    return [4 /*yield*/, session.run(insertData, params)];
-                case 5:
-                    resultPromise = _a.sent();
-                    session.close();
-                    driver.close();
-                    return [2 /*return*/, resultPromise];
-                case 6:
-                    error_1 = _a.sent();
-                    console.log(error_1);
-                    session.close();
-                    driver.close();
-                    return [3 /*break*/, 7];
-                case 7: return [2 /*return*/];
+                    _a.sent();
+                    return [2 /*return*/];
             }
         });
     });

@@ -1,16 +1,10 @@
 // tslint:disable: no-console
 import { GetProperty } from '../../services/utils/GetProperty';
-import PromisePool = require('@supercharge/promise-pool');
+import { ExecutarCypherQuery } from '../../services/utils/ExecutarCypherQuery';
 
-import neo4j = require('neo4j-driver');
+async function RunLoad(products: any) {
 
-async function RunLoad(params: any) {
-
-    const url = await GetProperty('neo4j.url').then(a=>{return a;});
-    const user = await GetProperty('neo4j.user').then(a=>{return a;});
-    const password = await GetProperty('neo4j.password').then(a=>{return a;});
-
-    const insertData = `UNWIND $products AS produto MERGE (n:Product {sku: produto.sku})
+    const insertStat = `UNWIND $products AS produto MERGE (n:Product {sku: produto.sku})
                             ON CREATE SET n.data_criacao=date(), n.data_atualizacao=date()
                             ON MATCH SET n.data_atualizacao=date()
                         WITH n,produto.atributos as atributos
@@ -21,19 +15,6 @@ async function RunLoad(params: any) {
                         CALL apoc.merge.relationship(n,relacao, {}, {}, node) YIELD rel
                         RETURN n`;
 
-    const driver = neo4j.driver(url, neo4j.auth.basic(user, password));
-    const session = driver.session();
-    try {
-        // console.log('Criando base no neo4j');
-        const resultPromise = await session.run(insertData,params);
-        session.close();
-        driver.close();
-        return resultPromise;
-
-    } catch (error) {
-        console.log(error);
-        session.close();
-        driver.close();
-    }
+    await ExecutarCypherQuery(insertStat,products);
 }
 export { RunLoad }
