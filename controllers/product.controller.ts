@@ -1,19 +1,22 @@
 // tslint:disable: no-console
 // const ProductService = require('../services/product.service')
 import { getProductDetails, getProducts, setProductsCategory } from '../services/product.service';
+import { Request, Response} from 'express';
 
 console.log('3. ###### PRODUCT CONTROLLER');
 
-const getProductsController = async (req,res) => {
+const getProductsController = async (req: Request,res: Response) => {
     try {
-        const products =  await getProducts();
+        const page: number = parseInt(req.query.page,0);
+        const limit: number = parseInt(req.query.limit,0);
+        const products =  await getProducts(page, limit);
         res.send(products);
     } catch (e) {
         console.log(e);
     }
 }
 
-const getProductDetailsController = async (req,res) => {
+const getProductDetailsController = async (req: Request,res: Response) => {
     try {
         const productId = req.params.id;
         const products =  await getProductDetails(productId);
@@ -23,7 +26,7 @@ const getProductDetailsController = async (req,res) => {
     }
 }
 
-const setProductsCategoryController = async (req, res) => {
+const setProductsCategoryController = async (req: Request,res: Response) => {
     try {
         const query = req.body;
         const idCategory = req.params.id;

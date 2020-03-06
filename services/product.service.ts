@@ -3,9 +3,20 @@ import { ExecutarCypherQuery } from './utils/ExecutarCypherQuery';
 
 console.log('2. ###### PRODUCT SERVICE');
 
-const getProducts = async () => {
+const getProducts = async (page: number,limit: number = 100) => {
     try {
-        const queryData = `match (a:Product) return a limit 100`;
+        let queryData: string;
+        let pagination: number;
+        if (page <= 1) {
+            pagination = 0;
+        } else if (page > 1) {
+            pagination = (page-1) * limit;
+        }
+        if (pagination) {
+            queryData = `match (a:Product) return a order by a.sku skip ${pagination} limit ${limit}`;
+        } else {
+            queryData = `match (a:Product) return a order by a.sku limit ${limit}`;
+        }
         return await ExecutarCypherQuery(queryData);
     } catch (error) {
         throw Error('Error while Paginating Products: ' + error)
