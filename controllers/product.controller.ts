@@ -1,5 +1,4 @@
 // tslint:disable: no-console
-// const ProductService = require('../services/product.service')
 import { getProductDetails, getProducts, setProductsCategory } from '../services/product.service';
 import { Request, Response} from 'express';
 

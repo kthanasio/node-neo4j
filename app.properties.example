@@ -1,0 +1,5 @@
+neo4j.url = bolt://localhost:7687
+neo4j.user = neo4j
+neo4j.password = ****
+qtyProducts=100000
+batch_size=1000

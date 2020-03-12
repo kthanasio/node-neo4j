@@ -1,5 +1,4 @@
 // tslint:disable: no-console
-import { GetProperty } from '../../services/utils/GetProperty';
 import { ExecutarCypherQuery } from '../../services/utils/ExecutarCypherQuery';
 
 async function RunLoad(products: any) {
